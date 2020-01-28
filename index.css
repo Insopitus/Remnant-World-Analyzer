@@ -1,9 +1,16 @@
-
+* {
+  box-sizing: border-box;
+}
 body {
   font-family: 'Roboto', sans-serif;
   background: #343a40;
   color: #f8f9fa;
   position: relative;
+}
+main {
+  max-width: 1200px;
+  width: 80%;
+  margin: auto;
 }
 
 h1 {
@@ -13,30 +20,57 @@ h1 {
   text-align: center;
 }
 
+#input {
+  width: 100%;
+  padding: 0 0 50px 0;
+}
+#input label {
+  display: block;
+  width: 60%;
+  height: 50px;
+  min-width: 600px;
+  margin: auto;
+  padding: 10px 5px;
+  text-align: center;
+  font-size: 24px;
+  background: dodgerblue;
+  border-radius: 8px;
+  cursor: pointer;
+}
+#input label:hover {
+  /* transform: translateY(-2px); */
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+}
 .info button:hover {
   cursor: pointer;
 }
 
-p {
+#tables {
+  margin: auto;
+  display: flex;
+  justify-content: center;
+}
+p,
+h2 {
   width: 50%;
   margin-left: 25%;
 }
 
-input, button {
+input,
+button {
   height: 32px;
-  margin-left: calc(25vw);
+  margin-left: 25vw;
   width: 140px;
   border-radius: 5px;
   font-size: 24px;
   padding: 4px 10px;
   border: none;
   margin-top: 40px;
-
 }
 
 #filters {
   position: fixed;
-  right: calc(75vw);
+  right: 75vw;
   display: none;
   width: 320px;
   top: 15vh;
@@ -47,35 +81,42 @@ input, button {
   margin-left: 0px;
 }
 
-#chances, .piece-table {
-  margin-top: 40px;
+#chances,
+.piece-table {
+  /* margin-top: 40px; */
   font-family: 'Roboto', sans-serif;
   border-collapse: collapse;
   width: 50%;
-  margin-left: calc(25vw);
-  font-size: 28px;
+  /* margin-left: calc(25vw); */
+  font-size: 18px;
 }
 
 .adventure-mode {
   display: none;
 }
 
-#chances td, #chances th, .piece-table td, .piece-table th {
-  border: 1px solid #ddd;
+#chances td,
+#chances th,
+.piece-table td,
+.piece-table th {
+  /* border: 1px solid #ddd; */
   padding: 8px;
 }
-
 
 /* .piece-table tr:nth-child(even)  {
   background-color: #f2f2f2;
   color: #343a40;
 }*/
 
-#chances th, .piece-table th {
+#chances th,
+.piece-table th {
   padding-top: 12px;
   padding-bottom: 12px;
-  text-align: left;
+  text-align: center;
   background-color: #70a1ff;
   color: white;
 }
 
+#fileInput {
+  display: none;
+}
