@@ -79,71 +79,72 @@ function getWorldData(textArray, worldMode) {
 
   var currentSublocation = ''
 
-  for (i = 0; i < textArray.length; i++) {
+  for (item of textArray) {
     var zone
     var eventType
     var eventName
     var lastEventname
     var inSmallDungeon = true
 
-    textLine = textArray[i]
-    if (textLine.search('World_City') != -1) {
+    if (item.search('World_City') != -1) {
       zone = 'Earth'
     }
-    if (textLine.search('World_Wasteland') != -1) {
+    if (item.search('World_Wasteland') != -1) {
       zone = 'Rhom'
     }
-    if (textLine.search('World_Jungle') != -1) {
+    if (item.search('World_Jungle') != -1) {
       zone = 'Yaesha'
     }
-    if (textLine.search('World_Swamp') != -1) {
+    if (item.search('World_Swamp') != -1) {
       zone = 'Corsus'
     }
 
     lastEventname = eventName
 
-    if (textLine.search('SmallD') != -1) {
+    if (item.search('SmallD') != -1) {
       eventType = 'Side Dungeon'
-      eventName = textLine.split('/')[3].split('_')[2]
+      eventName = item.split('/')[3].split('_')[2]
       currentSublocation = sublocations[eventName]
       inSmallDungeon = true
     }
-    if (textLine.search('OverworldPOI') != -1) {
+    if (item.search('OverworldPOI') != -1) {
       eventType = 'Point of Interest'
-      eventName = textLine.split('/')[3].split('_')[2]
+      eventName = item.split('/')[3].split('_')[2]
       currentSublocation = currentMainLocation
       inSmallDungeon = true
     }
-    if (textLine.search('Quest_Boss') != -1) {
+    if (item.search('Quest_Boss') != -1) {
       eventType = 'World Boss'
-      eventName = textLine.split('/')[3].split('_')[2]
+      eventName = item.split('/')[3].split('_')[2]
       currentSublocation = sublocations[eventName]
     }
-    if (textLine.search('Siege') != -1) {
+    if (item.search('Siege') != -1) {
       eventType = 'Siege'
-      eventName = textLine.split('/')[3].split('_')[2]
+      eventName = item.split('/')[3].split('_')[2]
       currentSublocation = sublocations[eventName]
     }
-    if (textLine.search('Mini') != -1) {
+    if (item.search('Mini') != -1) {
       eventType = 'Miniboss'
-      eventName = textLine.split('/')[3].split('_')[2]
+      eventName = item.split('/')[3].split('_')[2]
       currentSublocation = sublocations[eventName]
     }
-    if (textLine.search('Quest_Event') != -1) {
+    if (item.search('Quest_Event') != -1) {
       eventType = 'Item Drop'
-      eventName = textLine.split('/')[3].split('_')[2]
+      eventName = item.split('/')[3].split('_')[2]
     }
 
-    if (textLine.search('Overworld_Zone') != -1) {
+    if (item.search('Overworld_Zone') != -1) {
       currentMainLocation =
-        textLine.split('/')[3].split('_')[1] +
+        item.split('/')[3].split('_')[1] +
         ' ' +
-        textLine.split('/')[3].split('_')[2] +
+        item.split('/')[3].split('_')[2] +
         ' ' +
-        textLine.split('/')[3].split('_')[3]
+        item.split('/')[3].split('_')[3]
       currentMainLocation = mainLocations[currentMainLocation]
     }
-
+    // if (worldMode === '#adventure') {
+    //   // console.log(eventType)
+    // }
     if (eventName != lastEventname) {
       // Replacements
       if (eventName != undefined) {
@@ -172,12 +173,9 @@ function getWorldData(textArray, worldMode) {
           .replace('Splitter', 'Riphide')
       }
 
-      if (
-        zone != undefined &&
-        eventType != undefined &&
-        eventName != undefined
-      ) {
-        if (zones[zone][eventType] != undefined) {
+      if (zone && eventType && eventName) {
+        if (zones[zone][eventType]) {
+          // console.log(zones)
           if (zones[zone][eventType].search(eventName) == -1) {
             zones[zone][eventType] += ', ' + eventName
 
@@ -193,8 +191,10 @@ function getWorldData(textArray, worldMode) {
               '</td><td>' +
               eventName.split(/(?=[A-Z])/).join(' ') +
               '</td></tr>'
-
-            $(worldMode).append(html)
+            if (worldMode === '#adventure' && eventType === 'Item Drop') {
+              console.log('not', eventName)
+            }
+            document.querySelector(worldMode).innerHTML += html
           }
         } else {
           zones[zone][eventType] = eventName
@@ -210,10 +210,13 @@ function getWorldData(textArray, worldMode) {
             '</td><td>' +
             eventName.split(/(?=[A-Z])/).join(' ') +
             '</td></tr>'
-          $(worldMode).append(html)
+          if (worldMode === '#adventure' && eventType === 'Item Drop') {
+            console.log('yes', eventName)
+          }
+          document.querySelector(worldMode).innerHTML += html
         }
       }
-      $('#filters').show()
+      document.querySelector('#filters').style.display = 'block'
     }
   }
 }
@@ -232,6 +235,7 @@ function showDataFile(e, o) {
   //   console.log(textArray)
 
   advText = text.split(/\/Quests\/Quest_AdventureMode(.+)/)[1]
+
   if (advText) {
     adventureMode = true
     advArray = advText.split('/Game')
