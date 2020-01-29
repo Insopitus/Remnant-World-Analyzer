@@ -142,9 +142,7 @@ function getWorldData(textArray, worldMode) {
         item.split('/')[3].split('_')[3]
       currentMainLocation = mainLocations[currentMainLocation]
     }
-    // if (worldMode === '#adventure') {
-    //   // console.log(eventType)
-    // }
+
     if (eventName != lastEventname) {
       // Replacements
       if (eventName != undefined) {
@@ -191,9 +189,7 @@ function getWorldData(textArray, worldMode) {
               '</td><td>' +
               eventName.split(/(?=[A-Z])/).join(' ') +
               '</td></tr>'
-            if (worldMode === '#adventure' && eventType === 'Item Drop') {
-              console.log('not', eventName)
-            }
+
             document.querySelector(worldMode).innerHTML += html
           }
         } else {
@@ -210,9 +206,7 @@ function getWorldData(textArray, worldMode) {
             '</td><td>' +
             eventName.split(/(?=[A-Z])/).join(' ') +
             '</td></tr>'
-          if (worldMode === '#adventure' && eventType === 'Item Drop') {
-            console.log('yes', eventName)
-          }
+
           document.querySelector(worldMode).innerHTML += html
         }
       }
@@ -263,27 +257,27 @@ function toggleFilter(type) {
   }
 }
 
-document.querySelector('#toggle-items').addEventListener('click', () => {
-  toggleFilter('Item Drop')
-})
-document.querySelector('#toggle-sd').addEventListener('click', () => {
-  toggleFilter('Side Dungeon')
-})
-document.querySelector('#toggle-mb').addEventListener('click', () => {
-  toggleFilter('Miniboss')
-})
-document.querySelector('#toggle-poi').addEventListener('click', () => {
-  toggleFilter('Point')
-})
-document.querySelector('#toggle-bosses').addEventListener('click', () => {
-  toggleFilter('World Boss')
-})
-document.querySelector('#toggle-sieges').addEventListener('click', () => {
-  toggleFilter('Siege')
-})
-document.querySelector('#toggle-all').addEventListener('click', () => {
-  toggleFilter('')
-})
+document
+  .querySelector('#toggle-items')
+  .addEventListener('click', toggleFilter.bind(null, 'Item Drop'))
+document
+  .querySelector('#toggle-sd')
+  .addEventListener('click', toggleFilter.bind(null, 'Side Dungeon'))
+document
+  .querySelector('#toggle-mb')
+  .addEventListener('click', toggleFilter.bind(null, 'Miniboss'))
+document
+  .querySelector('#toggle-poi')
+  .addEventListener('click', toggleFilter.bind(null, 'Point'))
+document
+  .querySelector('#toggle-bosses')
+  .addEventListener('click', toggleFilter.bind(null, 'World Boss'))
+document
+  .querySelector('#toggle-sieges')
+  .addEventListener('click', toggleFilter.bind(null, 'Siege'))
+document
+  .querySelector('#toggle-all')
+  .addEventListener('click', toggleFilter.bind(null, ''))
 
 document.querySelector('#toggle-camp').onclick = function() {
   if (!hideCamp) {
