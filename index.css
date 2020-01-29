@@ -49,6 +49,9 @@ h1 {
   margin: auto;
   display: flex;
   justify-content: center;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  width: 60%;
 }
 p,
 h2 {
@@ -86,13 +89,13 @@ button {
   /* margin-top: 40px; */
   font-family: 'Roboto', sans-serif;
   border-collapse: collapse;
-  width: 50%;
+  /* width: 50%; */
   /* margin-left: calc(25vw); */
   font-size: 18px;
 }
 
 .adventure-mode {
-  display: none;
+  /* display: none; */
 }
 
 #chances td,
@@ -112,7 +115,7 @@ button {
 .piece-table th {
   padding-top: 12px;
   padding-bottom: 12px;
-  text-align: center;
+  text-align: left;
   background-color: #70a1ff;
   color: white;
 }

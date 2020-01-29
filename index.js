@@ -50,6 +50,7 @@ const mainLocations = {
 }
 
 let adventureMode = false
+let hideCamp = false
 
 function loadFile(o) {
   var fr = new FileReader()
@@ -218,7 +219,9 @@ function getWorldData(textArray, worldMode) {
 }
 
 function showDataFile(e, o) {
-  $('tr:not(.header-row)').remove()
+  for (node of document.querySelectorAll('.header-row')) {
+    node.style.display = 'table-row'
+  }
 
   text = e.target.result
   campArray = text
@@ -243,93 +246,46 @@ function showDataFile(e, o) {
   getWorldData(campArray, '#main')
 }
 
-$('#toggle-items').on('click', function() {
-  $('tr:not(.header-row)').hide()
-  $('td').each(function() {
-    if (
-      $(this)
-        .text()
-        .search('Item Drop') != -1
-    ) {
-      $(this)
-        .parent()
-        .show()
+function toggleFilter(type) {
+  for (node of document.querySelectorAll('tr')) {
+    if (node.classList.value !== 'header-row') {
+      node.style.display = 'none'
     }
-  })
-})
-$('#toggle-sd').on('click', function() {
-  $('tr:not(.header-row)').hide()
-  $('td').each(function() {
-    if (
-      $(this)
-        .text()
-        .search('Side Dungeon') != -1
-    ) {
-      $(this)
-        .parent()
-        .show()
+  }
+  for (node of document.querySelectorAll('td')) {
+    if (node.textContent.search(type) !== -1) {
+      node.parentNode.style.display = 'table-row'
     }
-  })
+  }
+}
+
+document.querySelector('#toggle-items').addEventListener('click', () => {
+  toggleFilter('Item Drop')
 })
-$('#toggle-mb').on('click', function() {
-  $('tr:not(.header-row)').hide()
-  $('td').each(function() {
-    if (
-      $(this)
-        .text()
-        .search('Miniboss') != -1
-    ) {
-      $(this)
-        .parent()
-        .show()
-    }
-  })
+document.querySelector('#toggle-sd').addEventListener('click', () => {
+  toggleFilter('Side Dungeon')
 })
-$('#toggle-adv').on('click', function() {
-  $('.main-mode, .adventure-mode').toggle()
+document.querySelector('#toggle-mb').addEventListener('click', () => {
+  toggleFilter('Miniboss')
 })
-$('#toggle-poi').on('click', function() {
-  $('tr:not(.header-row)').hide()
-  $('td').each(function() {
-    if (
-      $(this)
-        .text()
-        .search('Point') != -1
-    ) {
-      $(this)
-        .parent()
-        .show()
-    }
-  })
+document.querySelector('#toggle-poi').addEventListener('click', () => {
+  toggleFilter('Point')
 })
-$('#toggle-bosses').on('click', function() {
-  $('tr:not(.header-row)').hide()
-  $('td').each(function() {
-    if (
-      $(this)
-        .text()
-        .search('World Boss') != -1
-    ) {
-      $(this)
-        .parent()
-        .show()
-    }
-  })
+document.querySelector('#toggle-bosses').addEventListener('click', () => {
+  toggleFilter('World Boss')
 })
-$('#toggle-sieges').on('click', function() {
-  $('tr:not(.header-row)').hide()
-  $('td').each(function() {
-    if (
-      $(this)
-        .text()
-        .search('Siege') != -1
-    ) {
-      $(this)
-        .parent()
-        .show()
-    }
-  })
+document.querySelector('#toggle-sieges').addEventListener('click', () => {
+  toggleFilter('Siege')
 })
-$('#toggle-all').on('click', function() {
-  $('tr').show()
+document.querySelector('#toggle-all').addEventListener('click', () => {
+  toggleFilter('')
 })
+
+document.querySelector('#toggle-camp').onclick = function() {
+  if (!hideCamp) {
+    document.querySelector('.campaign-mode').style.display = 'none'
+  } else {
+    document.querySelector('.campaign-mode').style.display = 'table-row'
+  }
+  hideCamp = !hideCamp
+}
